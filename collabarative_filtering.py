@@ -230,14 +230,21 @@ def format_output(toprated_df, movies):
     return top_n_movies
 
 
-def main():
+def recommend_movies(selected_user, n_sim_users, n_for_movies):
+    """
+    This function recommends movies to a given user.
+    :param selected_user: Our User of Interest
+    :param n_sim_users: Number of similar users to use
+    :param n_for_movies: Number of movie recommendations we want
+    :return: the list with the top n most recommended movies and their rating
+    """
     """
     Part 1: Loading and formatting the data
     """
     # Read data
     ratings_temp = pd.read_csv("ratings.csv")
-    #print(ratings_temp.head())
-    #print(f"This dataset has {len(ratings_temp)} rows")
+    # print(ratings_temp.head())
+    # print(f"This dataset has {len(ratings_temp)} rows")
 
     # Pivot the table
     ratings = pd.pivot_table(index="userId", columns="movieId",
@@ -252,12 +259,9 @@ def main():
     And the similarity of each with our selected user
     """
 
-    selected_user = 598
-    n = 10
-
     # top_n_users
-    top_n_users = get_top(selected_user, n, ratings, avg_df)
-    #print(top_n_users)
+    top_n_users = get_top(selected_user, n_sim_users, ratings, avg_df)
+    # print(top_n_users)
 
     """
     Part 3: Recommending movies based on the ratings of the most similar users
@@ -281,15 +285,19 @@ def main():
     top_n_data = top_n_df.loc[:, mask]
 
     # Gets the predicted ratings for our user for the top n recommended movies
-    n_for_movies = 10
-    val = movie_pred(top_n_data, top_n_users, avg_df, selected_user, n_for_movies)
-    #print(val)
+    val = movie_pred(top_n_data, top_n_users, avg_df, selected_user,
+                     n_for_movies)
+    # print(val)
 
     # Read movie names to id mapping
-    movies = pd.read_csv("movies.csv", index_col='movieId')
+    # movies = pd.read_csv("movies.csv", index_col='movieId')
 
-    top_n_movies = format_output(val, movies)
-    print(top_n_movies)
+    # top_n_movies = format_output(val, movies)
+    return val
+
+
+def main():
+    print(recommend_movies(598, 10, 10))
 
 
 if __name__ == "__main__":
