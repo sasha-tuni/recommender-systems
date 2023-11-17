@@ -1,7 +1,8 @@
 """
-COMP.CS.100 ProgramName
-Creator: Robin Ivan Villa Soto
-Student id number: 151814365
+DATA.ML.360-2023-2024-1 - Recommender Systems
+Assignment 2 - Group Recommendations
+Sachini Hewage (152258085) & Robin Ivan Villa Soto (151814365)
+November 18, 2023
 """
 
 from collabarative_filtering import *
